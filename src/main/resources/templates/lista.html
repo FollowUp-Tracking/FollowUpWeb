@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+	<title>FollowUp</title>
+</head>
+
+<body>
+	<div class="loginBody">
+		<nav class="loginNav">
+
+			<div class="logo">
+				<h1>FollowUp </h1>
+				<img th:src="@{/img/camion.png}">
+			</div>
+			<a class="btn-primary" id="btn-nav" th:href="@{/login}">Login</a>
+		</nav>
+		<div class="login">
+			<p id="description title" style="align-self: center; padding-top: 8px; font-size: 18px;"><b>CREATE YOUR
+					ACCOUNT:</b></p>
+			<form class="form" action="/register" method="POST">
+				<div class="loginDiv">
+					<p class="register">Name:</p>
+					<input type="text" class="usuario" name="name" placeholder="Full name" required="required" />
+				</div>
+				<div class="loginDiv">
+					<p class="register">User name:</p>
+					<input type="text" class="usuario" name="username" placeholder="Username" required="required" />
+				</div>
+				<div class="loginDiv">
+					<p class="register">Email:</p>
+					<input type="email" class="usuario" name="email" placeholder="Email" required="required" />
+				</div>
+				<div class="loginDiv">
+					<p class="register">Password:</p>
+					<input type="password" class="usuario" name="password" placeholder="Password" required="required"
+						autocomplete="off" />
+				</div>
+				<div class="loginDiv">
+					<p class="register">Repeat Password:</p>
+					<input type="password" class="usuario" name="passwordRep" placeholder="Password" required="required"
+						autocomplete="off" />
+				</div>
+				<div>
+					<button type="submit" class="btn btn-success">Subscribe</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <title>FollowUp</title>
+</head>
+
+<body>
+    <div class="loginBody">
+        <nav class="loginNav">
+            <h1>FollowUp</h1>
+            <img th:src="@{/img/camion.png}">
+            <a th:href="@{/lista}" class="btn-primary" id="btn-nav">Sign up</a>
+            <a th:href="@{/historico}" class="btn-primary" id="btn-nav">Historico</a>
+        </nav>
+
+        <div class="login">
+            <h1>Login</h1>
+            <p style= "align-self: center;" id="title">Enter your Moodle username and password.</p>
+
+                <form style= "width: 70%;"name="form" class="form" action="/" method="post">
+
+                    <input type="text" class="usuario" name="username" placeholder="Username" required="required" />
+
+                    <input type="password" class="usuario" name="password" placeholder="Password" required="required"
+
+                        autocomplete="off" />
+
+                        <button type="button" class="btn btn-success">Login</button>
+
+                </form>
+        </div>
+    </div>
+</body>
+
+</html>

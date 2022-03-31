@@ -1,0 +1,93 @@
+<!--<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<div class="container">
+		<div class="card bg-dark">
+			<div class="card-header">
+				<h3 th:text="HISTORICO"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th th:text="Pedido"></th>
+							<th th:text="Producto"></th>
+							<th th:text="Vendedor"></th>
+							<th th:text="Repartidor"></th>
+							<th>-</th>
+							<th>-</th>
+							<th>-</th>
+							<th>-</th>			
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Traza: ${trazas}">
+							<td th:text="${Traza.idPedido}"></td>
+							<td th:text="${Traza.producto}"></td>
+							<td th:text="${Traza.vendedor}"></td>
+							<td th:text="${Traza.idRepartidor}"></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="" class="btn btn-outline-primary btn-block" th:text="Boton"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <title>FollowUp</title>
+</head>
+ 
+<body>
+    <nav class="loginNav">
+        <div class="logo">
+            <h1>FollowUp</h1>
+            <img th:src="@{/img/camion.png}">
+        </div>
+        <a class="btn-primary" id="btn-nav" th:href="@{/login}">Log Out</a>
+    </nav>
+    <div class="login">
+    <p style= "align-self: center;">HISTÓRICO DE PEDIDOS</p>
+    <div class="card">
+        <div class="card-body">
+            Pedido 1
+        </div>
+    </div>
+    <div style= "width: 70%;">
+        <p>FILTROS:</p>
+        <p>Número de seguimiento
+            <input type="text" class="usuario" name="username" required="required" />
+        </p>
+        <p>Ciudad
+            <input type="text" class="usuario" name="username" required="required" />
+        </p>
+        <p>Cliente
+            <input type="text" class="usuario" name="username" required="required" />
+        </p>
+        <p>Fecha de entrega
+            <input type="text" class="usuario" name="username" required="required" />
+        </p>
+        <button type="button" class="btn btn-success">Filtrar</button>
+    </div>
+    </div>
+</body>
+ 
+</html>
