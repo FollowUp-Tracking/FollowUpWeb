@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import es.upm.dit.isst.followmeweb.model.Traza;
@@ -27,9 +28,7 @@ public class TrazaController {
     }
 
     @GetMapping("/lista")
-    public String lista(Model model, Principal principal) {
-        List<Traza> lista = new ArrayList<Traza>();
-        model.addAttribute("trazas", lista);
+    public String lista() {
         return VISTA_LISTA;
     }
 
@@ -39,7 +38,9 @@ public class TrazaController {
     }
 
     @GetMapping("/historico")
-    public String historico() {
-        return VISTA_FORMULARIO;
+    public String historico(Model model) {
+        List<Traza> lista = new ArrayList<Traza>();
+        model.addAttribute("trazas", lista);
+        return VISTA_HISTORICO;
     }
 }
