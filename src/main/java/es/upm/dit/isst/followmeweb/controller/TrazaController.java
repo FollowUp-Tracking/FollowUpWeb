@@ -16,20 +16,19 @@ import es.upm.dit.isst.followmeweb.model.Traza;
 public class TrazaController {
 
     public final String TFGMANAGER_STRING= "http://localhost:8083/trazas/";
-    public static final String VISTA_LISTA = "lista";
+    public static final String VISTA_REGISTER = "register";
     public static final String VISTA_LOGIN = "login";
     public static final String VISTA_HISTORICO = "historico";
-    public static final String VISTA_FORMULARIO = "formulario";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/")
     public String inicio() {
-        return "redirect:/" + VISTA_LISTA;
+        return "redirect:/" + VISTA_LOGIN;
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/register")
     public String lista() {
-        return VISTA_LISTA;
+        return VISTA_REGISTER;
     }
 
     @GetMapping("/login")
