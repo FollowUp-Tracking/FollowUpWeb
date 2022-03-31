@@ -38,11 +38,11 @@ public class TrazaController {
         return VISTA_LOGIN;
     }
 
+    //Modificar para que salgan pedidos, no trazas
     @GetMapping("/historico")
     public String historico(Model model) {
         List<Traza> lista = new ArrayList<Traza>();
-        Arrays.asList(restTemplate.getForEntity(TRAZAMANAGER_STRING, Traza[].class).getBody());
-        lista.add(new Traza());
+        lista = Arrays.asList(restTemplate.getForEntity(TRAZAMANAGER_STRING, Traza[].class).getBody());
         model.addAttribute("trazas", lista);
         return VISTA_HISTORICO;
     }

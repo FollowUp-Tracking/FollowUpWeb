@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 
 public class Traza {
     
-    private int ID;
+    private int id;
     private double latitud;
     private double longitud;
     private Date fecha;
@@ -21,12 +21,12 @@ public class Traza {
     public Traza() {
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int iD) {
-        ID = iD;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getLatitud() {

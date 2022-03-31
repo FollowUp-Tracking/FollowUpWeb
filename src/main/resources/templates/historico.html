@@ -68,11 +68,22 @@
     <p style= "align-self: center;">HISTÓRICO DE PEDIDOS</p>
 	<div class="card body">
 		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th th:text="Producto"></th>
+					<th th:text="Cliente"></th>
+					<th th:text="Vendedor"></th>
+					<th th:text="Estado"></th>
+					<th th:text="Seguimiento"></th>		
+				</tr>
+			</thead>
 			<tbody>
-				<tr th:each="Traza: ${trazas}">
+				<tr th:each="Traza : ${trazas}">
 					<td th:text="${Traza.producto}"></td>
+					<td th:text="${Traza.cliente}"></td>
 					<td th:text="${Traza.vendedor}"></td>
-					<td th:text="${Traza.ID}"></td>
+					<td th:text="${Traza.estado}"></td>
+					<td><a th:href="@{/mapa}" class="btn-primary" id="btn-nav">Seguir</a></td>
 				</tr>
 			</tbody>
 		</table>
