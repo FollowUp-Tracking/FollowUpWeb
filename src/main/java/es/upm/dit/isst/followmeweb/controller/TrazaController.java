@@ -2,6 +2,7 @@ package es.upm.dit.isst.followmeweb.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,11 @@ import es.upm.dit.isst.followmeweb.model.Traza;
 @Controller
 public class TrazaController {
 
-    public final String TFGMANAGER_STRING= "http://localhost:8083/trazas/";
+    public final String TRAZAMANAGER_STRING = "http://localhost:8083/trazas";
     public static final String VISTA_REGISTER = "register";
     public static final String VISTA_LOGIN = "login";
     public static final String VISTA_HISTORICO = "historico";
+    public static final String VISTA_MAPA = "mapa";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/")
@@ -39,7 +41,14 @@ public class TrazaController {
     @GetMapping("/historico")
     public String historico(Model model) {
         List<Traza> lista = new ArrayList<Traza>();
+        Arrays.asList(restTemplate.getForEntity(TRAZAMANAGER_STRING, Traza[].class).getBody());
+        lista.add(new Traza());
         model.addAttribute("trazas", lista);
         return VISTA_HISTORICO;
+    }
+
+    @GetMapping("/mapa")
+    public String mapa() {
+        return VISTA_MAPA;
     }
 }

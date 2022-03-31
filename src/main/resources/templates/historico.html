@@ -45,7 +45,7 @@
 </body>
 </html>-->
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
  
 <head>
     <meta charset="UTF-8">
@@ -59,18 +59,24 @@
 <body>
     <nav class="loginNav">
         <div class="logo">
-            <h1>FollowUp</h1>
+            <h1 th:text="FollowUp" style="margin: auto"></h1>
             <img th:src="@{/img/camion.png}">
         </div>
         <a class="btn-primary" id="btn-nav" th:href="@{/login}">Log Out</a>
     </nav>
     <div class="login">
     <p style= "align-self: center;">HISTÓRICO DE PEDIDOS</p>
-    <div class="card">
-        <div class="card-body">
-            Pedido 1
-        </div>
-    </div>
+	<div class="card body">
+		<table class="table table-striped">
+			<tbody>
+				<tr th:each="Traza: ${trazas}">
+					<td th:text="${Traza.producto}"></td>
+					<td th:text="${Traza.vendedor}"></td>
+					<td th:text="${Traza.ID}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
     <div style= "width: 70%;">
         <p>FILTROS:</p>
         <p>Número de seguimiento

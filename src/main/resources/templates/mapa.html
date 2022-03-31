@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <title>Maps JavaScript API</title>
+    <style>
+        #map {
+            margin: auto;
+            display: block;
+            height: 68%;
+            width: 80%;
+        }
+.mapa{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCKiIqCdZGrVxx06LSbe7uG3zXOq1Cz5k&callback=initMap" async
+    defer>
+    </script>
+<script>
+ 
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 43.5293, lng: -5.6773 },
+            zoom: 13,
+        });
+        var marker = new google.maps.Marker({
+            position: { lat: 43.542194, lng: -5.676875 },
+            map: map,
+            title: 'Acuario de Gijón'
+        });
+    }
+ 
+</script>
+ 
+<body>
+    <nav class="loginNav">
+        <h1>FollowUp</h1>
+        <a th:href="@{/login}" class="btn-primary" id="btn-nav">Log Out</a>
+    </nav>   <div class="mapa"> 
+        <div id="map"> </div>
+        <p></p>
+        <a class="btn btn-success" th:href="@{/historico}">Volver</a>
+    </div>
+</body>
+ 
+</html>
