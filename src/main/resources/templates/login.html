@@ -13,30 +13,53 @@
 </head>
 
 <body>
+    
     <div class="loginBody">
         <nav class="loginNav">
             <div class="logo">
-                <h1 th:text="FollowUp" style="margin: auto"></h1>
-                <img th:src="@{/img/camion.png}">
-            </div>
+				<h1 th:text="FollowUp" style="margin: auto"></h1>
+				<img th:src="@{/img/camion.png}">
+			</div>
             <a th:href="@{/register}" class="btn-primary" id="btn-nav">Sign up</a>
         </nav>
 
-        <div class="login">
-            <h1 th:text="Login"></h1>
-            <p style="align-self: center;" id="title">Enter your Moodle username and password.</p>
+        <section class="vh-100 gradient-custom">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card bg-success text-white" style="border-radius: 1rem;">
+                            <div class="card-body p-5 text-center">
 
-            <form style="width: 70%;" name="form" class="form" action="/" method="post">
+                                <div class="mb-md-5 mt-md-4 pb-5">
 
-                <input type="text" class="usuario" name="username" placeholder="Username" required="required" />
+                                    <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                                    <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                                    <form action="/login" method="POST">
+                                        <div class="form-outline form-white mb-4">
+                                            <input type="email" id="email" name="email"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="typeEmailX">Email</label>
+                                        </div>
 
-                <input type="password" class="usuario" name="password" placeholder="Password" required="required"
-                    autocomplete="off" />
+                                        <div class="form-outline form-white mb-4">
+                                            <input type="password" id="password" name="password"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="typePasswordX">Password</label>
+                                        </div>
 
-                <button type="button" class="btn btn-success">Login</button>
+                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                                    </form>
+                                </div>
 
-            </form>
-        </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
     </div>
 </body>
 
