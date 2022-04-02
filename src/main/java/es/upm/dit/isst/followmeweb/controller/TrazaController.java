@@ -9,12 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import es.upm.dit.isst.followmeweb.model.Pedido;
 import es.upm.dit.isst.followmeweb.model.Traza;
 
 @Controller
 public class TrazaController {
 
     public final String TRAZAMANAGER_STRING = "http://localhost:8083/trazas/";
+    public final String PEDIDOMANAGER_STRING = "http://localhost:8083/pedidos/";
     public static final String VISTA_REGISTER = "register";
     public static final String VISTA_LOGIN = "login";
     public static final String VISTA_HISTORICO = "historico";
@@ -39,9 +41,9 @@ public class TrazaController {
     //Modificar para que salgan pedidos, no trazas
     @GetMapping("/historico")
     public String historico(Model model) {
-        List<Traza> lista = new ArrayList<Traza>();
-        lista = Arrays.asList(restTemplate.getForEntity(TRAZAMANAGER_STRING, Traza[].class).getBody());
-        model.addAttribute("trazas", lista);
+        List<Pedido> lista = new ArrayList<Pedido>();
+        lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+        model.addAttribute("pedidos", lista);
         return VISTA_HISTORICO;
     }
 

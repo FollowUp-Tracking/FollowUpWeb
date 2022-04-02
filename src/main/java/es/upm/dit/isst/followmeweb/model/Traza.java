@@ -2,8 +2,6 @@ package es.upm.dit.isst.followmeweb.model;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
-
 public class Traza {
     
     private int id;
@@ -14,8 +12,7 @@ public class Traza {
     
     private Date fecha;
 
-    @NotEmpty
-    private int idPedido;
+    private Pedido pedido;
     
     public Traza() {
     }
@@ -52,11 +49,11 @@ public class Traza {
         this.fecha = fecha;
     }
 
-    public int getIdPedido() {
-        return idPedido;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 }
