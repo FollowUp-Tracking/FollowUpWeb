@@ -21,23 +21,17 @@
     <div class="login">
     <p style= "align-self: center;">HISTÓRICO DE PEDIDOS</p>
 	<div class="card body">
-		<table class="table table-striped">
-			<thead>
+		<table class="table table-hover">
+			<thead class="thead-light">
 				<tr>
 					<th th:text="Pedido"></th>
-					<th th:text="Cliente"></th>
-					<th th:text="Vendedor"></th>
-					<th th:text="Repartidor"></th>
 					<th th:text="Seguimiento"></th>		
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="Pedido : ${pedidos}">
 					<td th:text="${Pedido.numeroSeguimiento}"></td>
-                    <td th:text="${Pedido.idCliente}"></td>
-                    <td th:text="${Pedido.idVendedor}"></td>
-                    <td th:text="${Pedido.idRepartidor}"></td>
-					<td><a th:href="@{/mapa}" class="btn-primary" id="btn-nav">Seguir</a></td>
+					<td><a th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}" class="btn-primary" id="btn-nav">Seguir</a></td>
 				</tr>
 			</tbody>
 		</table>

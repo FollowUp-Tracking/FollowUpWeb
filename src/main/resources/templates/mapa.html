@@ -54,7 +54,30 @@
         <h1>FollowUp</h1>
         <a th:href="@{/login}" class="btn-primary" id="btn-nav">Log Out</a>
     </nav>   <div class="mapa"> 
-        <div id="map"> </div>
+        <div id="map"></div>
+        <p></p>
+        <div class="card body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th th:text="Pedido"></th>
+                        <th th:text="Cliente"></th>
+                        <th th:text="Vendedor"></th>
+                        <th th:text="Repartidor"></th>
+                        <th th:text="Estado"></th>		
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${Pedido.numeroSeguimiento}"></td>
+                        <td th:text="${Pedido.idCliente}"></td>
+                        <td th:text="${Pedido.idVendedor}"></td>
+                        <td th:text="${Pedido.idRepartidor}"></td>
+                        <td th:text="${Pedido.estado}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <p></p>
         <a class="btn btn-success" th:href="@{/historico}">Volver</a>
     </div>
