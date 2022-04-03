@@ -28,11 +28,13 @@
 </head>
 
 <body>
-    <div>
+
+    <div class="loginBody">
+
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #26d399;">
             <!-- Navbar content -->
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="/" style="font-size:40px;  font-weight: 300px;">
+                <a class="navbar-brand" href="/" style="font-size:40px;  font-weight: 300px; color: white; ">
                     FollowUp <img th:src="@{/img/camion.png}" alt="" width="50" height="auto"
                         class="d-inline-block align-text-top">
                 </a>
@@ -55,35 +57,20 @@
         </nav>
 
         <section class="vh-100 gradient-custom">
-            <div class="py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-70">
-                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                            <div class="card-body p-5 text-center">
-                                <div>
-                                    <h2 class="fw-bold mb-2 text-uppercase">Iniciar Sesión</h2>
-                                    <p class="text-white-50 mb-3">Introduzca su correo y contraseña</p>
-                                    <form th:action="@{/login2}" th:object="${Usuario}" method="post">
-                                        <div class="form-outline form-white mb-4">
-                                            <input type="email" id="email" name="email"
-                                                class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typeEmailX">Email</label>
-                                        </div>
 
-                                        <div class="form-outline form-white mb-4">
-                                            <input type="password" id="password" name="password"
-                                                class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typePasswordX">Contraseña</label>
-                                        </div>
 
-                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Iniciar Sesión</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="jumbotron text-white jumbotron-image shadow" style="background-image: url(
+    http://tendencias21.levante-emv.com/wp-content/uploads/2019/12/29482598-28513093.jpg);">
+                <h1 class="display-4">Bienvenido!</h1>
+                <p class="lead">Encuentra tu pedido con FollowUp</p>
+                <hr class="my-4">
+                <p>La mejor forma de seguir en línea tu vida sea cual sea</p>
+                <p class="lead">
+                    <a class="btn btn-dark px-5" th:href="@{/login}" role="button">Iniciar Sesión</a>
+                    <a class="btn btn-dark px-5" th:href="@{/register}" role="button">Regsitar</a>
+                </p>
             </div>
+
         </section>
 
     </div>
