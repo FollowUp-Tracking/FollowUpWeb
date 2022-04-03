@@ -7,19 +7,23 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import es.upm.dit.isst.followmeweb.model.Pedido;
-import es.upm.dit.isst.followmeweb.model.Traza;
+import es.upm.dit.isst.followmeweb.model.Usuario;
 
 @Controller
-public class TrazaController {
+public class FollowUpController {
 
     public final String TRAZAMANAGER_STRING = "http://localhost:8083/trazas/";
     public final String PEDIDOMANAGER_STRING = "http://localhost:8083/pedidos/";
+    public final String USUARIOMANAGER_STRING = "http://localhost:8083/usuarios/";
     public static final String VISTA_REGISTER = "register";
     public static final String VISTA_LOGIN = "login";
     public static final String VISTA_HISTORICO = "historico";
@@ -32,8 +36,25 @@ public class TrazaController {
     }
 
     @GetMapping("/register")
-    public String lista() {
+    public String registrar(Map<String, Object> model) {
+        Usuario usuario = new Usuario();
+        model.put("Usuario", usuario);
+        model.put("accion", "guardar");
         return VISTA_REGISTER;
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(@Validated Usuario usuario, BindingResult result, Model model) {
+            if (result.hasErrors()) {
+                    return VISTA_REGISTER;
+            }
+            try { 
+                restTemplate.postForObject(USUARIOMANAGER_STRING, usuario, Usuario.class);
+            } catch(Exception e) {}
+            
+            return "redirect:" + VISTA_HISTORICO;
+        
+
     }
 
     @GetMapping("/login")
@@ -41,7 +62,6 @@ public class TrazaController {
         return VISTA_LOGIN;
     }
 
-    //Modificar para que salgan pedidos, no trazas
     @GetMapping("/historico")
     public String historico(Model model) {
         List<Pedido> lista = new ArrayList<Pedido>();
