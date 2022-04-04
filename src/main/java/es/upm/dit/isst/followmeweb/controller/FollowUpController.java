@@ -60,7 +60,7 @@ public class FollowUpController {
             try { 
                 restTemplate.postForObject(USUARIOMANAGER_STRING, usuario, Usuario.class);
             } catch(Exception e) {}
-            
+            logueado = true;
             return "redirect:" + VISTA_HISTORICO;
     }
 
