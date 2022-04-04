@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,6 +32,7 @@ public class FollowUpController {
     public static final String VISTA_MAPA = "mapa";
     public static final String VISTA_INICIO = "inicio";
     private RestTemplate restTemplate = new RestTemplate();
+    private boolean logueado = false;
 
     @GetMapping("/")
     public String inicio() {
@@ -60,15 +62,14 @@ public class FollowUpController {
             } catch(Exception e) {}
             
             return "redirect:" + VISTA_HISTORICO;
-        
-
     }
 
     @GetMapping("/login")
     public String vistaLogin(Map<String, Object> model) {
-        //Usuario usuario = new Usuario();
-        //model.put("Usuario", usuario);
-        //model.put("accion", "login2");
+        logueado = false;
+        Usuario usuario = new Usuario();
+        model.put("Usuario", usuario);
+        model.put("accion", "login2");
         return VISTA_LOGIN;
     }
 
@@ -86,6 +87,7 @@ public class FollowUpController {
                     }
                     if(map.containsKey(usuario.getEmail())){
                         if(map.get(usuario.getEmail()).equals(usuario.getPassword()))
+                            logueado = true;
                             return "redirect:/" + VISTA_HISTORICO;
                     } 
                 }
@@ -96,69 +98,36 @@ public class FollowUpController {
     }
 
     @GetMapping("/historico")
-    public String historico(Model model) {
-        List<Pedido> lista = new ArrayList<Pedido>();
-        lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
-        model.addAttribute("pedidos", lista);
-        return VISTA_HISTORICO;
-    }
-
-    @GetMapping("/historico/cliente/{id}")
-    public String historicoCliente(@PathVariable(value = "id") String id, Map<String, Object> model) {
-        List<Pedido> lista = new ArrayList<Pedido>();
-        try { 
-            lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "cliente/" + id, Pedido[].class).getBody());
-        } 
-        catch (HttpClientErrorException.NotFound ex) {}
-
-        model.put("pedidos", lista);
-        return VISTA_HISTORICO;
-    }
-
-    @PostMapping("/historico/filtro")
-    public String filtro(@Validated Pedido pedido, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return VISTA_REGISTER;
-        }
-        List<Pedido> pedidos = new ArrayList<Pedido>();
-        try { 
-            pedidos = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
-            if(pedido.getNumeroSeguimiento()!=null || pedido.getNumeroSeguimiento() !=""){
-                for(Pedido p: pedidos){
-                    if(p.getNumeroSeguimiento()!=pedido.getNumeroSeguimiento())
-                        pedidos.remove(p);
-                }
-            }
-            if(String.valueOf(pedido.getIdCliente()) != null || String.valueOf(pedido.getIdCliente()) !=""){
-                for(Pedido p: pedidos){
-                    if(p.getIdCliente()!=pedido.getIdCliente())
-                        pedidos.remove(p);
-                }
-            }
-            if(String.valueOf(pedido.getIdVendedor()) != null || String.valueOf( pedido.getIdVendedor()) !=""){
-                for(Pedido p: pedidos){
-                    if(p.getIdVendedor()!= pedido.getIdVendedor())
-                        pedidos.remove(p);
-                }
-            }
-            model.addAttribute("pedidos", pedidos);
+    public String historico(Model model, @RequestParam(name="numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento) {
+        if(logueado) {
+            List<Pedido> lista = new ArrayList<Pedido>();
+            model.addAttribute("numeroSeguimiento", numeroSeguimiento);
+                try { Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + numeroSeguimiento, Pedido.class);
+                    if (pedido != null)
+                        lista.add(pedido);
+                } catch (Exception e) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+                }      
+            model.addAttribute("pedidos", lista);
             return VISTA_HISTORICO;
-        } 
-        catch (HttpClientErrorException.NotFound ex) {
-            return "redirect:/" + VISTA_LOGIN;
+        } else {
+            return "redirect:/" +  VISTA_LOGIN;
         }
     }
 
     @GetMapping("/mapa/{id}")
     public String mapa(@PathVariable(value = "id") String id, Map<String, Object> model) {
-        Pedido pedido = null;
+        if(logueado) {
+            Pedido pedido = null;
+            try { 
+                pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
+            } 
+            catch (HttpClientErrorException.NotFound ex) {}
+            model.put("Pedido", pedido);
+            return VISTA_MAPA;
+        } else {
+            return "redirect:/" +  VISTA_LOGIN;
+        }
 
-                try { 
-                    pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
-                } 
-                catch (HttpClientErrorException.NotFound ex) {}
-
-                model.put("Pedido", pedido);
-        return VISTA_MAPA;
     }
 }

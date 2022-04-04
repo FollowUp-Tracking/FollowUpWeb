@@ -66,21 +66,21 @@
                                     <p class="text-white-50 mb-3">Rellene todos los campos requeridos</p>
                                     <form class="form" th:action="@{/guardar}" th:object="${Usuario}" method="POST">
                                         <div class="form-outline form-white mb-4">
-                                            <input type="text" id="username" name="username"
+                                            <input type="text" th:field="*{username}" name="username"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typeEmailX">Nombre Usuario*</label>
+                                            <label class="form-label" for="username">Nombre Usuario*</label>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input type="email" id="email" name="email"
+                                            <input type="email" th:field="*{email}" name="email"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typePasswordX">Email*</label>
+                                            <label class="form-label" for="email">Email*</label>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input type="password" id="password" name="password"
+                                            <input type="password" th:field="*{password}" name="password"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typePasswordX">Contraseña*</label>
+                                            <label class="form-label" for="password">Contraseña*</label>
                                         </div>
                                         <button class="btn btn-outline-light btn-lg px-5"
                                             type="submit">Crear</button>

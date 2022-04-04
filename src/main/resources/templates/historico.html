@@ -87,20 +87,14 @@
                                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                                     <div class="card-body p-5 text-center ">
                                         <div>
-                                            <form th:action="@{/historico/filtro}" th:object="${Pedido}" method="post">
-                                            <h4 class="fw-bold mb-2 text-uppercase">FILTROS</h4>
-                                            <input type="text" id="id" name="numeroSeguimiento" class="form-control form-control-lg"
-                                                />
-                                            <label class="form-label" for="id">Número de seguimiento</label>
-                                            <input type="text" id="vendedor" name="idVendedor"
-                                                class="form-control form-control-lg" />
-                                            <label class="form-label" for="vendedor">Vendedor</label>
-                                            <input type="text" id="user" name="idCliente"
-                                                class="form-control form-control-lg"/>
-                                            <label class="form-label" for="user">Cliente</label>
-                                            </br>
-                                            <button class="btn btn-outline-light btn-md px-3"
-                                            type="submit">Filtrar</button>
+                                            <form th:action="@{/historico}">
+                                                <h4 class="fw-bold mb-2 text-uppercase">FILTROS</h4>
+                                                <input type="text" id="numeroSeguimiento" name="numeroSeguimiento" 
+                                                    class="form-control form-control-lg"/>
+                                                <label class="form-label" for="numeroSeguimiento">Número de seguimiento</label>
+                                                </br>
+                                                <button class="btn btn-outline-light btn-md px-3"
+                                                type="submit">Filtrar</button>
                                             </form>
                                         </div>
                                     </div>

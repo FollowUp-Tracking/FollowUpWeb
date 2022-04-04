@@ -65,13 +65,13 @@
                                     <p class="text-white-50 mb-3">Introduzca su correo y contraseña</p>
                                     <form th:action="@{/login2}" th:object="${Usuario}" method="post">
                                         <div class="form-outline form-white mb-4">
-                                            <input type="email" id="email" name="email"
+                                            <input type="email" th:field="*{email}" name="email"
                                                 class="form-control form-control-lg" required />
                                             <label class="form-label" for="typeEmailX">Email</label>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input type="password" id="password" name="password"
+                                            <input type="password" th:field="*{password}" name="password"
                                                 class="form-control form-control-lg" required />
                                             <label class="form-label" for="typePasswordX">Contraseña</label>
                                         </div>
