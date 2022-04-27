@@ -9,7 +9,9 @@ public class Usuario {
 
     private String password;
 
-    private int rol; //1-Admin 2-Empresa 3-Cliente 4-Repartidor
+    private String rol; //ADM-Admin EMP-Empresa CLI-Cliente REP-Repartidor
+
+    private boolean enable;
 
     public Usuario() {
     }
@@ -46,11 +48,21 @@ public class Usuario {
         this.password = password;
     }
 
-    public int getRol() {
+    public String getRol() {
         return rol;
     }
 
-    public void setRol(int rol) {
+    public void setRol(String rol) {
         this.rol = rol;
     }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+
 }

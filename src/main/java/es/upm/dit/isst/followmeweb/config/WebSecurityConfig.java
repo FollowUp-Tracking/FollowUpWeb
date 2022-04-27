@@ -1,22 +1,30 @@
 package es.upm.dit.isst.followmeweb.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-    private CustomAuthenticationProvider authProvider;
+    DataSource ds;
 
-    @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider);
+        auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
+			.dataSource(ds)
+			.usersByUsernameQuery("select username, password, enabled from usuarios where username=?")
+			.authoritiesByUsernameQuery("select username, rol from usuarios where username=?");
 	}
 
 	@Override
@@ -25,25 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
         .authorizeRequests()
 			.antMatchers("/css/**", "/img/**", "/layouts/**").permitAll()
-			.antMatchers("/", "/lista", "/historico/**", "/register", "/mapa/**", "/inicio").permitAll()
-			.antMatchers("/crear", "/guardar", "/login2").permitAll()
+			.antMatchers("/historico/**", "/mapa/**").hasAnyRole("ADM", "EMP", "CLI", "REP")
+			.antMatchers("/", "/inicio", "/register", "/guardar", "/login").permitAll()
 			.anyRequest().authenticated()
         .and()
             .formLogin()
 				.loginPage("/login")
+				.defaultSuccessUrl("/inicio", true)
 				.permitAll()
 		.and()
             .logout()
 			.permitAll();
-/*
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //NEW
-        .and()
-        .authorizeRequests()
-			.antMatchers("/login").permitAll() // sustituye por formLogin y logout
-			.antMatchers("/lista").permitAll()
-            .anyRequest().authenticated()
-        .and()
-			.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-*/
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

@@ -64,11 +64,11 @@
                                 <div>
                                     <h2 class="fw-bold mb-2 text-uppercase">Crear Cuenta</h2>
                                     <p class="text-white-50 mb-3">Rellene todos los campos requeridos</p>
-                                    <form class="form" th:action="@{/guardar}" th:object="${Usuario}" method="POST">
+                                    <form class="form" th:action="@{/guardar}" th:object="${Usuario}" method="post">
                                         <div class="form-outline form-white mb-4">
                                             <input type="text" th:field="*{username}" name="username"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="username">Nombre Usuario*</label>
+                                            <label class="form-label" for="username">Usuario*</label>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
@@ -81,6 +81,16 @@
                                             <input type="password" th:field="*{password}" name="password"
                                                 class="form-control form-control-lg" required />
                                             <label class="form-label" for="password">Contraseña*</label>
+                                        </div>
+
+                                        <div class="form-outline form-white mb-4">
+                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option selected>Seleccione rol del usuario</option>
+                                                <option value="1">Cliente</option>
+                                                <option value="2">Empresa</option>
+                                                <option value="3">Repartidor</option>
+                                                <option value="4">Administrador</option>
+                                              </select>
                                         </div>
                                         <button class="btn btn-outline-light btn-lg px-5"
                                             type="submit">Crear</button>

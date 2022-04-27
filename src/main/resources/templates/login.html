@@ -53,7 +53,7 @@
                 </div>
             </div>
         </nav>
-
+        <!--Formulario de Login-->
         <section class="vh-100 gradient-custom">
             <div class="py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-70">
@@ -62,16 +62,16 @@
                             <div class="card-body p-5 text-center">
                                 <div>
                                     <h2 class="fw-bold mb-2 text-uppercase">Iniciar Sesión</h2>
-                                    <p class="text-white-50 mb-3">Introduzca su correo y contraseña</p>
-                                    <form th:action="@{/login2}" th:object="${Usuario}" method="post">
+                                    <p class="text-white-50 mb-3">Introduzca su usuario y contraseña</p>
+                                    <form th:action="@{/login}" method="post">
                                         <div class="form-outline form-white mb-4">
-                                            <input type="email" th:field="*{email}" name="email"
+                                            <input type="text" name="username"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="typeEmailX">Email</label>
+                                            <label class="form-label" for="typeEmailX">Usuario</label>
                                         </div>
 
                                         <div class="form-outline form-white mb-4">
-                                            <input type="password" th:field="*{password}" name="password"
+                                            <input type="password" name="password"
                                                 class="form-control form-control-lg" required />
                                             <label class="form-label" for="typePasswordX">Contraseña</label>
                                         </div>
