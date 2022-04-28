@@ -6,11 +6,11 @@ public class Pedido {
     
     private String numeroSeguimiento;
 
-    private int idCliente;
+    private String cliente;
 
-    private int idVendedor;
+    private String vendedor;
 
-    private int idRepartidor;
+    private String repartidor;
 
     private int estado;
 
@@ -31,28 +31,28 @@ public class Pedido {
         this.numeroSeguimiento = numeroSeguimiento;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public String getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
-    public int getIdVendedor() {
-        return idVendedor;
+    public String getVendedor() {
+        return vendedor;
     }
 
-    public void setIdVendedor(int idVendedor) {
-        this.idVendedor = idVendedor;
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
     }
 
-    public int getIdRepartidor() {
-        return idRepartidor;
+    public String getRepartidor() {
+        return repartidor;
     }
 
-    public void setIdRepartidor(int idRepartidor) {
-        this.idRepartidor = idRepartidor;
+    public void setRepartidor(String repartidor) {
+        this.repartidor = repartidor;
     }
 
     public List<Traza> getTrazas() {

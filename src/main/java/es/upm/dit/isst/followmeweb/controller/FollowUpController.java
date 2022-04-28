@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +42,7 @@ public class FollowUpController {
     }
 
     @GetMapping("/inicio")
-    public String vistaInicio() {
+    public String vistaInicio(@AuthenticationPrincipal Usuario usuario) {
         return VISTA_INICIO;
     }
 
@@ -70,14 +73,33 @@ public class FollowUpController {
     }
 
     @GetMapping("/historico")
-    public String historico(Model model,
-            @RequestParam(name = "numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento) {
+    public String historico(Model model, @RequestParam(name = "numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento,
+                            Authentication auth) {
         List<Pedido> lista = new ArrayList<Pedido>();
         model.addAttribute("numeroSeguimiento", numeroSeguimiento);
         try {
-            Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + numeroSeguimiento, Pedido.class);
+            /*Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING +  "cliente/" + auth.getName(), Pedido.class);
             if (pedido != null)
-                lista.add(pedido);
+                lista.add(pedido);*/
+            //Mostrar la lista de pedidos segun el usuario registrado
+            for (GrantedAuthority rol: auth.getAuthorities()) {
+                if ("ROLE_CLI".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "cliente/" + auth.getName(), Pedido[].class).getBody());
+                    break;
+                } else if ("ROLE_EMP".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "vendedor/" + auth.getName(), Pedido[].class).getBody());
+                    break;
+                } else if ("ROLE_REP".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "repartidor/" + auth.getName(), Pedido[].class).getBody());
+                    break;
+                } else if ("ROLE_ADM".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+                    break;
+                } else {
+                    break;
+                }
+            }
+
         } catch (Exception e) {
             lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
         }
