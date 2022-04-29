@@ -85,7 +85,7 @@
                                                         <th scope="col">Pedido</th>
                                                         <th scope="col">Estado</th>
                                                         <th sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')"
-                                                        scope="col">Seguimiento</th>
+                                                            scope="col">Seguimiento</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -114,37 +114,53 @@
                                                                                 aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <a class="btn btn-outline-dark btn-md px-3"
-                                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                                                role="button">En almacen</a>
-                                                                            <a class="btn btn-outline-dark btn-md px-3"
-                                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                                                role="button">Recogido</a>
-                                                                            <a class="btn btn-outline-dark btn-md px-3"
-                                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                                                role="button">En camino</a>
-                                                                            <a class="btn btn-outline-dark btn-md px-3"
-                                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                                                role="button">Entregado</a>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                                            <button type="button"
-                                                                                class="btn btn-primary">Guardar</button>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                <input type="hidden" name="estado" value="1"/>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-outline-dark btn-md px-3">En
+                                                                                    almacen</button>
+                                                                            </form>
+
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                <input type="hidden" name="estado" value="2"/>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-outline-dark btn-md px-3">En
+                                                                                    camino</button>
+                                                                            </form>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                <input type="hidden" name="estado" value="3"/>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-outline-dark btn-md px-3">Entregado</button>
+                                                                            </form>
+
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                <input type="hidden" name="estado" value="4"/>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-outline-dark btn-md px-3">Cancelado</button>
+                                                                            </form>
+
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <span style="color: white;">En almacén</span>
+                                                            <span th:if="${Pedido.estado}==0" style="color: white;">En proceso</span>
+                                                            <span th:if="${Pedido.estado}==1" style="color: white;">En almacén</span>
+                                                            <span th:if="${Pedido.estado}==2" style="color: white;">En reparto</span>
+                                                            <span th:if="${Pedido.estado}==3" style="color: white;">Entregado</span>
+                                                            <span th:if="${Pedido.estado}==4" style="color: white;">Cancelado</span>
+                                                            <!--<span th:text="${Pedido.estado}" style="color: white;"></span>-->
                                                         </td>
                                                         <td
-                                                        sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')">
-                                                        <a class="btn btn-outline-light btn-md px-3"
-                                                            th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                            role="button">Seguir</a>
-                                                    </td>
+                                                            sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')">
+                                                            <a class="btn btn-outline-light btn-md px-3"
+                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
+                                                                role="button">Seguir</a>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>

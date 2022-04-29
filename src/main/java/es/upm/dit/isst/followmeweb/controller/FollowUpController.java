@@ -148,4 +148,29 @@ public class FollowUpController {
         restTemplate.delete(USUARIOMANAGER_STRING+ usuarioId);
         return "redirect:/" + VISTA_USUARIOS;
     }
+
+    @GetMapping("/estado/{id}") 
+    public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado, Map<String, Object> model) {
+        Pedido pedido = null;
+        try{
+
+            System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAA");
+            System.out.println(estado);
+            pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
+            pedido.setEstado(Integer.parseInt(estado));
+            System.out.println(pedido.getEstado());
+            System.out.println(pedido.getNumeroSeguimiento());
+            System.out.println(pedido.getCliente());
+            System.out.println(pedido.getVendedor());
+            System.out.println(pedido.getRepartidor());
+            
+            restTemplate.put(PEDIDOMANAGER_STRING + id, pedido, Pedido.class);
+    
+        }catch(Exception e){
+            System.out.println("error");
+        }
+        return "redirect:/" + VISTA_HISTORICO;
+    }
+
+
 }
