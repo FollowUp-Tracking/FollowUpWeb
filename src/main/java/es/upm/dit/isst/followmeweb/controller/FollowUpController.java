@@ -34,6 +34,7 @@ public class FollowUpController {
     public static final String VISTA_HISTORICO = "historico";
     public static final String VISTA_MAPA = "mapa";
     public static final String VISTA_INICIO = "inicio";
+    public static final String VISTA_USUARIOS = "usuarios";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/")
@@ -60,6 +61,9 @@ public class FollowUpController {
             return VISTA_REGISTER;
         }
         try {
+            if (usuario.getRol() == null) {
+                usuario.setRol("ROLE_CLI");
+            }
             usuario.setPassword(BCrypt.hashpw(usuario.getPassword(), BCrypt.gensalt()));
             restTemplate.postForObject(USUARIOMANAGER_STRING, usuario, Usuario.class);
         } catch (Exception e) {
@@ -73,24 +77,34 @@ public class FollowUpController {
     }
 
     @GetMapping("/historico")
-    public String historico(Model model, @RequestParam(name = "numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento,
-                            Authentication auth) {
+    public String historico(Model model,
+            @RequestParam(name = "numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento,
+            Authentication auth) {
         List<Pedido> lista = new ArrayList<Pedido>();
         model.addAttribute("numeroSeguimiento", numeroSeguimiento);
         try {
-            /*Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING +  "cliente/" + auth.getName(), Pedido.class);
-            if (pedido != null)
-                lista.add(pedido);*/
-            //Mostrar la lista de pedidos segun el usuario registrado
-            for (GrantedAuthority rol: auth.getAuthorities()) {
+            /*
+             * Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + "cliente/" +
+             * auth.getName(), Pedido.class);
+             * if (pedido != null)
+             * lista.add(pedido);
+             */
+            // Mostrar la lista de pedidos segun el usuario registrado
+            for (GrantedAuthority rol : auth.getAuthorities()) {
                 if ("ROLE_CLI".equals(rol.getAuthority())) {
-                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "cliente/" + auth.getName(), Pedido[].class).getBody());
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "cliente/" + auth.getName(), Pedido[].class)
+                            .getBody());
                     break;
                 } else if ("ROLE_EMP".equals(rol.getAuthority())) {
-                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "vendedor/" + auth.getName(), Pedido[].class).getBody());
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "vendedor/" + auth.getName(), Pedido[].class)
+                            .getBody());
                     break;
                 } else if ("ROLE_REP".equals(rol.getAuthority())) {
-                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "repartidor/" + auth.getName(), Pedido[].class).getBody());
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "repartidor/" + auth.getName(), Pedido[].class)
+                            .getBody());
                     break;
                 } else if ("ROLE_ADM".equals(rol.getAuthority())) {
                     lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
@@ -116,5 +130,22 @@ public class FollowUpController {
         }
         model.put("Pedido", pedido);
         return VISTA_MAPA;
+    }
+
+    @GetMapping("/usuarios")
+    public String usuarios(Model model) {
+        List<Usuario> lista = new ArrayList<Usuario>();
+        try {
+            lista = Arrays.asList(restTemplate.getForEntity(USUARIOMANAGER_STRING, Usuario[].class).getBody());
+        } catch (Exception e) {
+        }
+        model.addAttribute("usuarios", lista);
+        return VISTA_USUARIOS;
+    }
+
+    @GetMapping("/eliminar")
+    public String eliminar(@RequestParam int usuarioId) {
+        restTemplate.delete(USUARIOMANAGER_STRING+ usuarioId);
+        return "redirect:/" + VISTA_USUARIOS;
     }
 }
