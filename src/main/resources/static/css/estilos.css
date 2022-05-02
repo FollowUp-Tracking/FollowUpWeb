@@ -99,7 +99,6 @@ nav{
     display: flex;
     padding-left: 9px;
     font-size: xx-large;
-    height: 2.4em;
     color: white;
     font-family: cursive;
     justify-content: space-between;
@@ -142,3 +141,27 @@ nav{
     cursor: pointer!important;
     color: #000000!important;
   }
+
+  @media (orientation: landscape) {
+
+    .editCard{
+
+        grid-template-columns: 40% 60%;
+
+    }
+
+}
+
+@media (orientation: Portrait) {
+
+    .editBody{
+
+        margin-top: 5.5em !important;
+
+        margin: 0em;
+
+    }
+
+   
+
+}
