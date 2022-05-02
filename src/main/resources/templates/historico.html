@@ -169,11 +169,13 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!----------FILTROS----------->
                             <div class="col-md-5">
                                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                                     <div class="card-body p-5 text-center ">
                                         <div>
-                                            <form th:action="@{/historico}">
+                                            <form th:action="@{/historico/filtro}" method="post">
                                                 <h4 class="fw-bold mb-2 text-uppercase">FILTROS</h4>
                                                 <input type="text" id="numeroSeguimiento" name="numeroSeguimiento"
                                                     class="form-control form-control-lg" />

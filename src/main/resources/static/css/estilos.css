@@ -144,24 +144,21 @@ nav{
 
   @media (orientation: landscape) {
 
-    .editCard{
-
-        grid-template-columns: 40% 60%;
-
-    }
-
 }
 
 @media (orientation: Portrait) {
 
-    .editBody{
-
-        margin-top: 5.5em !important;
-
-        margin: 0em;
+    .card{
+        margin-bottom: 1em;
 
     }
+    .card-body.p-5{
+        padding: 1rem!important;
+    }
 
+    .p-5.h-70{
+        padding: 1.5rem!important;
+    }
    
 
 }

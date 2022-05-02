@@ -75,7 +75,7 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div>
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-9">
                                 <div class="card bg-dark text-white" style="border-radius: 1rem;">
                                     <div class="card-body p-5 text-center ">
                                         <div>
@@ -86,7 +86,9 @@
                                                         <th scope="col">Username</th>
                                                         <th scope="col">Correo</th>
                                                         <th scope="col">Rol</th>
-                                                        <th scope="col">Acciones</th>
+                                                        <th scope="col">Habilitar</th>
+                                                        <th scope="col">Eliminar</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -97,13 +99,16 @@
                                                         </td>
                                                         <td th:text="${Usuario.rol}" class="text-white">
                                                         </td>
-                                                    
                                                         <td>
-                                                            <a class="btn btn-info btn-md px-2"
-                                                                role="button"><img th:src="@{/img/editar.png}" style="height: 20px"></a>
-                                                                <a class="btn btn-danger btn-md px-2"
-                                                                th:href="@{/eliminar(usuarioId = ${Usuario.id})}"
-                                                                role="button"><img th:src="@{/img/eliminar.png}" style="height: 20px"></a>
+                                                            
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="hola" value="false" checked>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-danger btn-md px-2"
+                                                            th:href="@{/eliminar(usuarioId = ${Usuario.id})}"
+                                                            role="button"><img th:src="@{/img/eliminar.png}" style="height: 20px"></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -115,6 +120,28 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center ">
+                            <div>
+                                <form th:action="@{/usuarios/filtro}" method="post">
+                                    <h4 class="fw-bold mb-2 text-uppercase">FILTROS</h4>
+                                    <input type="text" id="numeroSeguimiento" name="username"
+                                        class="form-control form-control-lg" />
+                                    <label class="form-label" for="numeroSeguimiento">Username</label>
+                                    </br>
+                                    <button class="btn btn-outline-light btn-md px-3"
+                                        type="submit">Filtrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
         </section>
 
     </div>

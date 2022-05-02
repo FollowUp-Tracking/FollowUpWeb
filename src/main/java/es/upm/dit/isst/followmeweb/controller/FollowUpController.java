@@ -121,6 +121,8 @@ public class FollowUpController {
         return VISTA_HISTORICO;
     }
 
+
+
     @GetMapping("/mapa/{id}")
     public String mapa(@PathVariable(value = "id") String id, Map<String, Object> model) {
         Pedido pedido = null;
@@ -131,6 +133,72 @@ public class FollowUpController {
         model.put("Pedido", pedido);
         return VISTA_MAPA;
     }
+
+    @PostMapping("/historico/filtro")
+    public String filtro(Model model, @RequestParam(name = "numeroSeguimiento", required = false, defaultValue = "") String numeroSeguimiento,
+    Authentication auth) {
+        List<Pedido> lista = new ArrayList<Pedido>();
+        List<Pedido> filtrada = new ArrayList<Pedido>();
+        model.addAttribute("numeroSeguimiento", numeroSeguimiento);
+        try {
+            // Mostrar la lista de pedidos segun el usuario registrado
+            for (GrantedAuthority rol : auth.getAuthorities()) {
+                if ("ROLE_CLI".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "cliente/" + auth.getName(), Pedido[].class)
+                            .getBody());
+                    for(Pedido ped: lista){
+                        if(ped.getNumeroSeguimiento().equals(numeroSeguimiento)){
+                            filtrada.add(ped);
+                            break;
+                        }
+                    }
+                    break;
+                } else if ("ROLE_EMP".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "vendedor/" + auth.getName(), Pedido[].class)
+                            .getBody());
+
+                            for(Pedido ped: lista){
+                                if(ped.getNumeroSeguimiento().equals(numeroSeguimiento)){
+                                    filtrada.add(ped);
+                                    break;
+                                }
+                            }
+                    break;
+                } else if ("ROLE_REP".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate
+                            .getForEntity(PEDIDOMANAGER_STRING + "repartidor/" + auth.getName(), Pedido[].class)
+                            .getBody());
+
+                            for(Pedido ped: lista){
+                                if(ped.getNumeroSeguimiento().equals(numeroSeguimiento)){
+                                    filtrada.add(ped);
+                                    break;
+                                }
+                            }
+                    break;
+                } else if ("ROLE_ADM".equals(rol.getAuthority())) {
+                    lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+                    for(Pedido ped: lista){
+                        if(ped.getNumeroSeguimiento().equals(numeroSeguimiento)){
+                            filtrada.add(ped);
+                            break;
+                        }
+                    }
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+        } catch (Exception e) {
+            lista = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+        }
+        model.addAttribute("pedidos", filtrada);
+        return VISTA_HISTORICO;
+    }
+
 
     @GetMapping("/usuarios")
     public String usuarios(Model model) {
@@ -143,11 +211,37 @@ public class FollowUpController {
         return VISTA_USUARIOS;
     }
 
+
+    @GetMapping("/habilitar")
+    public String habilitar(@RequestParam int usuarioId) {
+        
+        return "redirect:/" + VISTA_USUARIOS;
+    }
+
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam int usuarioId) {
         restTemplate.delete(USUARIOMANAGER_STRING+ usuarioId);
         return "redirect:/" + VISTA_USUARIOS;
     }
+
+    @PostMapping("/usuarios/filtro")
+    public String usuariosFiltro (Model model, @RequestParam String username) {
+        List<Usuario> lista = new ArrayList<Usuario>();
+        List<Usuario> filtrada = new ArrayList<Usuario>();
+        try {
+            lista = Arrays.asList(restTemplate.getForEntity(USUARIOMANAGER_STRING, Usuario[].class).getBody());
+            for(Usuario user: lista){
+                if(user.getUsername().equals(username)){
+                    filtrada.add(user);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+        model.addAttribute("usuarios", filtrada);
+        return VISTA_USUARIOS;
+    }
+
 
     @GetMapping("/estado/{id}") 
     public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado, Map<String, Object> model) {
