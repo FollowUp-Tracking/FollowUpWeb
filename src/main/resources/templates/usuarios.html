@@ -99,11 +99,16 @@
                                                         </td>
                                                         <td th:text="${Usuario.rol}" class="text-white">
                                                         </td>
-                                                        <td>
-                                                            
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" name="hola" value="false" checked>
-                                                            </div>
+                                                        <td>         
+                                                            <a class="btn btn-success btn-md px-2"
+                                                            th:href="@{/habilitar/} + ${Usuario.id}"
+                                                            th:if="${Usuario.enable}==true"
+                                                            role="button">Habilitado</a> 
+                                                            <a class="btn btn-danger btn-md px-2"
+                                                            th:href="@{/habilitar/} + ${Usuario.id}"
+                                                            th:if="${Usuario.enable}==false"
+                                                            role="button">Deshabilitado</a> 
+                                                           
                                                         </td>
                                                         <td>
                                                             <a class="btn btn-danger btn-md px-2"

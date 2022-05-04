@@ -20,6 +20,8 @@ public class Pedido {
     
     private List<Traza> trazas;
 
+    private String vehiculo;
+
     public Pedido() {
     }
 
@@ -87,4 +89,11 @@ public class Pedido {
         this.longitudDestino = longitudDestino;
     }
     
+    public String getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(String vehiculo) {
+        this.vehiculo = vehiculo;
+    }
 }

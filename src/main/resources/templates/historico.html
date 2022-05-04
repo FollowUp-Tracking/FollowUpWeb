@@ -87,74 +87,77 @@
                                                         <th scope="col">Estado</th>
                                                         <th sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')"
                                                             scope="col">Seguimiento</th>
+                                                        <th sec:authorize="hasAnyRole('ROLE_REP')"
+                                                            scope="col">Vehículo</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr th:each="Pedido : ${pedidos}">
-                                                        <td th:text="${Pedido.numeroSeguimiento}" class="text-white">
+                                                        <td class="text-white">
+                                                            <div th:text="${Pedido.numeroSeguimiento}" class="d-flex flex-row justify-content-center"></div>
                                                         </td>
                                                         <td>
-                                                            <!-- Button trigger modal -->
-                                                            <button sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_REP')"
-                                                                type="button" class="btn btn-light"
-                                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                Cambiar
-                                                            </button>
+                                                            <div>
+                                                                <!-- Button trigger modal -->
+                                                                <button sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_REP')"
+                                                                    type="button" class="btn btn-light"
+                                                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                    Cambiar
+                                                                </button>
 
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">Estado del pedido
-                                                                            </h5>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form
-                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                <input type="hidden" name="estado" value="1"/>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-outline-dark btn-md px-3">En
-                                                                                    almacen</button>
-                                                                            </form>
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">Estado del pedido
+                                                                                </h5>
+                                                                                <button type="button" class="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <form
+                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                    <input type="hidden" name="estado" value="1"/>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">En
+                                                                                        almacen</button>
+                                                                                </form>
 
-                                                                            <form
-                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                <input type="hidden" name="estado" value="2"/>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-outline-dark btn-md px-3">En
-                                                                                    camino</button>
-                                                                            </form>
-                                                                            <form
-                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                <input type="hidden" name="estado" value="3"/>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-outline-dark btn-md px-3">Entregado</button>
-                                                                            </form>
+                                                                                <form
+                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                    <input type="hidden" name="estado" value="2"/>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">En
+                                                                                        camino</button>
+                                                                                </form>
+                                                                                <form
+                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                    <input type="hidden" name="estado" value="3"/>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">Entregado</button>
+                                                                                </form>
 
-                                                                            <form
-                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                <input type="hidden" name="estado" value="4"/>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-outline-dark btn-md px-3">Cancelado</button>
-                                                                            </form>
-
-                                                                            
+                                                                                <form
+                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
+                                                                                    <input type="hidden" name="estado" value="4"/>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">Cancelado</button>
+                                                                                </form>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <span th:if="${Pedido.estado}==0" style="color: white;">En proceso</span>
+                                                                <span th:if="${Pedido.estado}==1" style="color: white;">En almacén</span>
+                                                                <span th:if="${Pedido.estado}==2" style="color: white;">En reparto</span>
+                                                                <span th:if="${Pedido.estado}==3" style="color: white;">Entregado</span>
+                                                                <span th:if="${Pedido.estado}==4" style="color: white;">Cancelado</span>
                                                             </div>
-                                                            <span th:if="${Pedido.estado}==0" style="color: white;">En proceso</span>
-                                                            <span th:if="${Pedido.estado}==1" style="color: white;">En almacén</span>
-                                                            <span th:if="${Pedido.estado}==2" style="color: white;">En reparto</span>
-                                                            <span th:if="${Pedido.estado}==3" style="color: white;">Entregado</span>
-                                                            <span th:if="${Pedido.estado}==4" style="color: white;">Cancelado</span>
-                                                            <!--<span th:text="${Pedido.estado}" style="color: white;"></span>-->
+
                                                         </td>
                                                         <td
                                                             sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')">
@@ -162,6 +165,47 @@
                                                                 th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
                                                                 role="button">Seguir</a>
                                                         </td>
+                                                        <td>
+
+                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                                              
+                                                                <!--SELECT-->
+                                                                <div class="dropdown">
+                                                                    <a class="btn btn-secondary dropdown-toggle btn btn-light" href="#"
+                                                                        role="button" id="dropdownMenuLink"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Select
+                                                                    </a>
+    
+                                                                    <ul class="dropdown-menu p-0"
+                                                                        aria-labelledby="dropdownMenuLink">
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/vehiculo/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="vehiculo" value="coche"/>
+                                                                                <button type="submit" class="btn btn-ligth px-3" style="width:100%">
+                                                                                    Coche
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/vehiculo/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="vehiculo" value="bici"/>
+                                                                                <button type="submit" class="btn px-3" style="width:100%">
+                                                                                    Bici
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <script src="https://kit.fontawesome.com/7f0b5f5e56.js" crossorigin="anonymous"></script>
+                                                                <!-- <i th:if="${Pedido.vehiculo}==bici" class="bi bi-bicycle" style="color: white; font-size: xx-large; margin-left: 0.7em;"></i> -->
+                                                                <i th:if="${Pedido.vehiculo}==coche" class="fa-solid fa-car" style="color: white; font-size: xx-large; margin-left: 0.7em;"></i>
+                                                                <img th:if="${Pedido.vehiculo}==bici" src="https://bicicletas.com.pe/wp-content/uploads/2020/12/icono_bici_blanca.png" width= "40px" height="39px" style="color: white; font-size: xx-large; margin-left: 0.7em;">
+                                                            </div>
+                                                           
+                                                        </td> 
                                                     </tr>
                                                 </tbody>
                                             </table>

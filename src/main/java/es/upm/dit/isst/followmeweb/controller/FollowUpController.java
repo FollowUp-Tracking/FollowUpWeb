@@ -128,6 +128,9 @@ public class FollowUpController {
         Pedido pedido = null;
         try {
             pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
+            if(pedido.getVehiculo().equals(null)){
+                pedido.setVehiculo("coche");
+            }
         } catch (HttpClientErrorException.NotFound ex) {
         }
         model.put("Pedido", pedido);
@@ -257,5 +260,36 @@ public class FollowUpController {
         return "redirect:/" + VISTA_HISTORICO;
     }
 
+    @GetMapping("/habilitar/{id}") 
+    public String habilitarUsuario(@PathVariable(value = "id") String id, Map<String, Object> model) {
+        Usuario usuario = null;
+        try{
+            usuario = restTemplate.getForObject(USUARIOMANAGER_STRING + id, Usuario.class);
+            if(usuario.isEnable()){
+                usuario.setEnable(false);
+            }else{
+                usuario.setEnable(true);
+            }
+            restTemplate.postForObject(USUARIOMANAGER_STRING + "habilitar/" + usuario.getId(), usuario, Usuario.class);
+            model.put("Usuario", usuario);
+        }catch(Exception e){
+            System.out.println("error");
+        }
+        return "redirect:/" + VISTA_USUARIOS;
+    }
+
+    @GetMapping("/vehiculo/{id}") 
+    public String asignarVehiculo(@PathVariable(value = "id") String id, @RequestParam String vehiculo, Map<String, Object> model) {
+        Pedido pedido = null;
+        try{
+            pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
+            pedido.setVehiculo(vehiculo);
+            restTemplate.postForObject(PEDIDOMANAGER_STRING + "vehiculo/" + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
+            model.put("Pedido", pedido);
+        }catch(Exception e){
+            System.out.println("error");
+        }
+        return "redirect:/" + VISTA_HISTORICO;
+    }
 
 }
