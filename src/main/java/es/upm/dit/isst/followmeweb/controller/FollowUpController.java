@@ -214,13 +214,6 @@ public class FollowUpController {
         return VISTA_USUARIOS;
     }
 
-
-    @GetMapping("/habilitar")
-    public String habilitar(@RequestParam int usuarioId) {
-        
-        return "redirect:/" + VISTA_USUARIOS;
-    }
-
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam int usuarioId) {
         restTemplate.delete(USUARIOMANAGER_STRING+ usuarioId);
@@ -247,13 +240,12 @@ public class FollowUpController {
 
 
     @GetMapping("/estado/{id}") 
-    public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado, Map<String, Object> model) {
+    public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado) {
         Pedido pedido = null;
         try{
             pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
             pedido.setEstado(Integer.parseInt(estado));
-            restTemplate.postForObject(PEDIDOMANAGER_STRING + "estado/" + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
-            model.put("Pedido", pedido);
+            restTemplate.put(PEDIDOMANAGER_STRING + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
         }catch(Exception e){
             System.out.println("error");
         }
@@ -261,7 +253,7 @@ public class FollowUpController {
     }
 
     @GetMapping("/habilitar/{id}") 
-    public String habilitarUsuario(@PathVariable(value = "id") String id, Map<String, Object> model) {
+    public String habilitarUsuario(@PathVariable(value = "id") String id) {
         Usuario usuario = null;
         try{
             usuario = restTemplate.getForObject(USUARIOMANAGER_STRING + id, Usuario.class);
@@ -270,8 +262,7 @@ public class FollowUpController {
             }else{
                 usuario.setEnable(true);
             }
-            restTemplate.postForObject(USUARIOMANAGER_STRING + "habilitar/" + usuario.getId(), usuario, Usuario.class);
-            model.put("Usuario", usuario);
+            restTemplate.put(USUARIOMANAGER_STRING + usuario.getId(), usuario, Usuario.class);
         }catch(Exception e){
             System.out.println("error");
         }
@@ -279,13 +270,12 @@ public class FollowUpController {
     }
 
     @GetMapping("/vehiculo/{id}") 
-    public String asignarVehiculo(@PathVariable(value = "id") String id, @RequestParam String vehiculo, Map<String, Object> model) {
+    public String asignarVehiculo(@PathVariable(value = "id") String id, @RequestParam String vehiculo) {
         Pedido pedido = null;
         try{
             pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
             pedido.setVehiculo(vehiculo);
-            restTemplate.postForObject(PEDIDOMANAGER_STRING + "vehiculo/" + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
-            model.put("Pedido", pedido);
+            restTemplate.put(PEDIDOMANAGER_STRING + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
         }catch(Exception e){
             System.out.println("error");
         }

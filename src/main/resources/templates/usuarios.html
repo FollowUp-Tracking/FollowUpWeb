@@ -97,7 +97,11 @@
                                                         </td>
                                                         <td th:text="${Usuario.email}" class="text-white">
                                                         </td>
-                                                        <td th:text="${Usuario.rol}" class="text-white">
+                                                        <td class="text-white">
+                                                            <span th:if="${Usuario.rol}==ROLE_CLI">CLIENTE</span>
+                                                            <span th:if="${Usuario.rol}==ROLE_EMP">EMPRESA</span>
+                                                            <span th:if="${Usuario.rol}==ROLE_REP">REPARTIDOR</span>
+                                                            <span th:if="${Usuario.rol}==ROLE_ADM">ADMINISTRADOR</span>
                                                         </td>
                                                         <td>         
                                                             <a class="btn btn-success btn-md px-2"

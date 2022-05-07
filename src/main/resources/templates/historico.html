@@ -85,10 +85,10 @@
                                                     <tr>
                                                         <th scope="col">Pedido</th>
                                                         <th scope="col">Estado</th>
+                                                        <th sec:authorize="hasAnyRole('ROLE_REP', 'ROLE_ADM')"
+                                                            scope="col">Vehículo</th>
                                                         <th sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')"
                                                             scope="col">Seguimiento</th>
-                                                        <th sec:authorize="hasAnyRole('ROLE_REP')"
-                                                            scope="col">Vehículo</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -132,7 +132,7 @@
                                                                                     <input type="hidden" name="estado" value="2"/>
                                                                                     <button type="submit"
                                                                                         class="btn btn-outline-dark btn-md px-3 m-2">En
-                                                                                        camino</button>
+                                                                                        reparto</button>
                                                                                 </form>
                                                                                 <form
                                                                                     th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
@@ -158,12 +158,6 @@
                                                                 <span th:if="${Pedido.estado}==4" style="color: white;">Cancelado</span>
                                                             </div>
 
-                                                        </td>
-                                                        <td
-                                                            sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')">
-                                                            <a class="btn btn-outline-light btn-md px-3"
-                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
-                                                                role="button">Seguir</a>
                                                         </td>
                                                         <td>
 
@@ -205,7 +199,12 @@
                                                                 <img th:if="${Pedido.vehiculo}==bici" src="https://bicicletas.com.pe/wp-content/uploads/2020/12/icono_bici_blanca.png" width= "40px" height="39px" style="color: white; font-size: xx-large; margin-left: 0.7em;">
                                                             </div>
                                                            
-                                                        </td> 
+                                                        </td>
+                                                        <td sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')">
+                                                            <a class="btn btn-outline-light btn-md px-3"
+                                                                th:href="@{/mapa/} + ${Pedido.numeroSeguimiento}"
+                                                                role="button">Seguir</a>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
