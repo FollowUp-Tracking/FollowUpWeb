@@ -68,18 +68,20 @@
     defer
   ></script>
 
-  <script>
+  <script th:inline="javascript">
     var i = 0;
-    let destino = [40.4525575, -3.7266465]; // PASAR AQUÍ LA DIRECCIÓN DEL PEDIDO
-    let coordenadas = [                     // PASAR AQUÍ LAS TRAZAS DEL REPARTIDOR
-      [40.4514444, -3.7276798],
-      [40.4516306, -3.7277046],
-      [40.4519467, -3.7277616],
-      [40.4523246, -3.7276637],
-      [40.4524294, -3.7272127],
-      [40.4525108, -3.7267843],
-      [40.4525575, -3.7266465],
-    ];
+    var pedido = /*[[${pedido}]]*/ null;
+    var trazas = /*[[${trazas}]]*/ null;  // PASAR AQUÍ LAS TRAZAS DEL REPARTIDOR
+    let destino = [pedido.latitudDestino, pedido.longitudDestino]; // PASAR AQUÍ LA DIRECCIÓN DEL PEDIDO
+    // let coordenadas = [                                        
+    //   [40.4514444, -3.7276798],
+    //   [40.4516306, -3.7277046],
+    //   [40.4519467, -3.7277616],
+    //   [40.4523246, -3.7276637],
+    //   [40.4524294, -3.7272127],
+    //   [40.4525108, -3.7267843],
+    //   [40.4525575, -3.7266465],
+    // ];
   
     function initMap() {
 
@@ -99,17 +101,17 @@
       document.getElementById("duration").innerHTML = "El pedido todavía no está en reparto";
       // ---------------------------------------------------------------------
 
-      t = setInterval(ruta, 30000); // PONER QUE SE REFRESQUE CADA MEDIO MINUTO POR EJEMPLO
+      t = setInterval(ruta, 3000); // PONER QUE SE REFRESQUE CADA MEDIO MINUTO POR EJEMPLO
 
       function ruta() {
-        let traza = coordenadas[i];
+        let traza = trazas[i];
 
         // Request route directions
         directionsService.route(
           {
-            origin: { lat: traza[0], lng: traza[1] }, // va cambiando
+            origin: { lat: traza.latitud, lng: traza.longitud }, // va cambiando
             destination: { lat: destino[0], lng: destino[1] }, // dir destino
-            travelMode: google.maps.TravelMode.BICYCLING, // DEPENDE DEL VEHICULO DEL REPARTIDOR
+            travelMode: pedido.vehiculo === "coche" ? google.maps.TravelMode.DRIVING : google.maps.TravelMode.BICYCLING, // DEPENDE DEL VEHICULO DEL REPARTIDOR
           },
           function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
@@ -125,7 +127,7 @@
               directionsDisplay.setDirections(response);
               document.getElementById("duration").innerHTML = parseInt(duration/60) + " min";
               if (duration < 60) {
-                document.getElementById("duration").innerHTML = duration + " s"; // YO PONDRÍA MENOS DE 1 MIN
+                document.getElementById("duration").innerHTML = "Menos de 1 min"; // YO PONDRÍA MENOS DE 1 MIN
               }
               if (duration == 0) 
                 document.getElementById("duration").innerHTML = "El pedido ya ha llegado a su destino";
@@ -136,7 +138,7 @@
         );
 
         i++;
-        if (i === coordenadas.length) {
+        if (i === trazas.length) {
           clearInterval(t);
         }
       }

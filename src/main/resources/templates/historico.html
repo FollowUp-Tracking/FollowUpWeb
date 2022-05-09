@@ -97,59 +97,53 @@
                                                             <div th:text="${Pedido.numeroSeguimiento}" class="d-flex flex-row justify-content-center"></div>
                                                         </td>
                                                         <td>
-                                                            <div>
-                                                                <!-- Button trigger modal -->
-                                                                <button sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_REP')"
-                                                                    type="button" class="btn btn-light"
-                                                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                    Cambiar
-                                                                </button>
-
-                                                                <!-- Modal -->
-                                                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="exampleModalLabel">Estado del pedido
-                                                                                </h5>
-                                                                                <button type="button" class="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form
-                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                    <input type="hidden" name="estado" value="1"/>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">En
-                                                                                        almacen</button>
-                                                                                </form>
-
-                                                                                <form
-                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                    <input type="hidden" name="estado" value="2"/>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">En
-                                                                                        reparto</button>
-                                                                                </form>
-                                                                                <form
-                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                    <input type="hidden" name="estado" value="3"/>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">Entregado</button>
-                                                                                </form>
-
-                                                                                <form
-                                                                                    th:action="@{/estado/} + ${Pedido.numeroSeguimiento}">
-                                                                                    <input type="hidden" name="estado" value="4"/>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-outline-dark btn-md px-3 m-2">Cancelado</button>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                                                                <!--SELECT-->
+                                                                <div class="dropdown">
+                                                                    <a class="btn btn-secondary dropdown-toggle btn btn-light" href="#"
+                                                                        role="button" id="dropdownMenuLink"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Cambiar
+                                                                    </a>
+    
+                                                                    <ul class="dropdown-menu p-0"
+                                                                        aria-labelledby="dropdownMenuLink">
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="estado" value="1"/>
+                                                                                <button type="submit" class="btn btn-ligth px-3" style="width:100%">
+                                                                                    En almacén                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="estado" value="2"/>
+                                                                                <button type="submit" class="btn px-3" style="width:100%">
+                                                                                    En reparto
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="estado" value="3"/>
+                                                                                <button type="submit" class="btn px-3" style="width:100%">
+                                                                                    Entregado
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                th:action="@{/estado/} + ${Pedido.numeroSeguimiento}" class="list-group-item list-group-item-action p-0">
+                                                                                <input type="hidden" name="estado" value="4"/>
+                                                                                <button type="submit" class="btn px-3" style="width:100%">
+                                                                                    Cancelado
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
                                                                 <span th:if="${Pedido.estado}==0" style="color: white;">En proceso</span>
                                                                 <span th:if="${Pedido.estado}==1" style="color: white;">En almacén</span>
@@ -160,9 +154,7 @@
 
                                                         </td>
                                                         <td>
-
-                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
-                                                              
+                                                            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">           
                                                                 <!--SELECT-->
                                                                 <div class="dropdown">
                                                                     <a class="btn btn-secondary dropdown-toggle btn btn-light" href="#"

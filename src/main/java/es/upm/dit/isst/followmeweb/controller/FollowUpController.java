@@ -21,6 +21,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import es.upm.dit.isst.followmeweb.model.Pedido;
+import es.upm.dit.isst.followmeweb.model.Traza;
 import es.upm.dit.isst.followmeweb.model.Usuario;
 
 @Controller
@@ -83,13 +84,6 @@ public class FollowUpController {
         List<Pedido> lista = new ArrayList<Pedido>();
         model.addAttribute("numeroSeguimiento", numeroSeguimiento);
         try {
-            /*
-             * Pedido pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + "cliente/" +
-             * auth.getName(), Pedido.class);
-             * if (pedido != null)
-             * lista.add(pedido);
-             */
-            // Mostrar la lista de pedidos segun el usuario registrado
             for (GrantedAuthority rol : auth.getAuthorities()) {
                 if ("ROLE_CLI".equals(rol.getAuthority())) {
                     lista = Arrays.asList(restTemplate
@@ -121,19 +115,20 @@ public class FollowUpController {
         return VISTA_HISTORICO;
     }
 
-
-
     @GetMapping("/mapa/{id}")
-    public String mapa(@PathVariable(value = "id") String id, Map<String, Object> model) {
+    public String mapa(@PathVariable(value = "id") String id, Model model) {
         Pedido pedido = null;
+        List<Traza> trazas = new ArrayList<Traza>();
         try {
             pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
             if(pedido.getVehiculo().equals(null)){
                 pedido.setVehiculo("coche");
             }
+            trazas = Arrays.asList(restTemplate.getForEntity(TRAZAMANAGER_STRING + "/pedido/" + id, Traza[].class).getBody());
         } catch (HttpClientErrorException.NotFound ex) {
         }
-        model.put("Pedido", pedido);
+        model.addAttribute("trazas", trazas);
+        model.addAttribute("pedido", pedido);
         return VISTA_MAPA;
     }
 
@@ -238,20 +233,6 @@ public class FollowUpController {
         return VISTA_USUARIOS;
     }
 
-
-    @GetMapping("/estado/{id}") 
-    public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado) {
-        Pedido pedido = null;
-        try{
-            pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
-            pedido.setEstado(Integer.parseInt(estado));
-            restTemplate.put(PEDIDOMANAGER_STRING + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
-        }catch(Exception e){
-            System.out.println("error");
-        }
-        return "redirect:/" + VISTA_HISTORICO;
-    }
-
     @GetMapping("/habilitar/{id}") 
     public String habilitarUsuario(@PathVariable(value = "id") String id) {
         Usuario usuario = null;
@@ -267,6 +248,19 @@ public class FollowUpController {
             System.out.println("error");
         }
         return "redirect:/" + VISTA_USUARIOS;
+    }
+
+    @GetMapping("/estado/{id}") 
+    public String cambiarEstado(@PathVariable(value = "id") String id, @RequestParam String estado) {
+        Pedido pedido = null;
+        try{
+            pedido = restTemplate.getForObject(PEDIDOMANAGER_STRING + id, Pedido.class);
+            pedido.setEstado(Integer.parseInt(estado));
+            restTemplate.put(PEDIDOMANAGER_STRING + pedido.getNumeroSeguimiento(), pedido, Pedido.class);
+        }catch(Exception e){
+            System.out.println("error");
+        }
+        return "redirect:/" + VISTA_HISTORICO;
     }
 
     @GetMapping("/vehiculo/{id}") 
