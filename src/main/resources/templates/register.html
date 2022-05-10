@@ -99,13 +99,13 @@
                                             <label class="form-label" for="password">Contraseña*</label>
                                         </div>
 
-                                        <div class="form-outline form-white mb-4" >
+                                        <div  sec:authorize="hasRole('ROLE_ADM')" class="form-outline form-white mb-4" >
                                             <select class="form-select form-select-sm" th:field="*{rol}" aria-label=".form-select-sm example">
                                                 <option selected value="ROLE_CLI">Seleccione el rol del usuario</option>
                                                 <option value="ROLE_CLI">Cliente</option>
-                                                <option sec:authorize="hasRole('ROLE_ADM')" value="ROLE_EMP">Empresa</option>
-                                                <option sec:authorize="hasRole('ROLE_ADM')" value="ROLE_REP">Repartidor</option>
-                                                <option sec:authorize="hasRole('ROLE_ADM')" value="ROLE_ADM">Administrador</option>
+                                                <option value="ROLE_EMP">Empresa</option>
+                                                <option value="ROLE_REP">Repartidor</option>
+                                                <option value="ROLE_ADM">Administrador</option>
                                             </select>
                                         </div>
                                         <button class="btn btn-outline-light btn-lg px-5"
