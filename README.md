@@ -2,7 +2,7 @@
 
 <h3 align="left">Comentarios:</h3>
 <h5 aling="left">La rama *master contine el codigo completo</h5>
-<h5 aling="left">Para el funcionamiento del front-end junto con MySQL es necesario contar con el Workbench de MySQL y adaptar los datos de usuario y contraseña usados</h5>
+<h5 aling="left">Para el funcionamiento del front-end junto con MySQL es necesario contar con el Workbench de MySQL y adaptar los datos de <i>nombre de la base de datos</i>, <i>usuario</i> y <i>contraseña</i> usados</h5>
 <h5 aling="left">Para el funcionamiento del front-end junto con HTTPS es necesario indicar la ruta global del archivo <i>mykeys.jks</i></h5>
 <p align="left">
 </p>
