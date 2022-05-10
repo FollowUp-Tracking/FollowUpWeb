@@ -65,6 +65,10 @@
                             <a th:href="@{/historico}" class="nav-link navLetras" aria-current="page"
                                 style="font-size:20px">Historico</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADM')">
+                            <a th:href="@{/analisis}" class="nav-link navLetras" aria-current="page"
+                                style="font-size:20px">Análisis</a>
+                        </li>
                     </ul>
                 </div>
             </div>

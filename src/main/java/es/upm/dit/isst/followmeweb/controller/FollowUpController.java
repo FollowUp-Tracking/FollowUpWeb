@@ -36,6 +36,7 @@ public class FollowUpController {
     public static final String VISTA_MAPA = "mapa";
     public static final String VISTA_INICIO = "inicio";
     public static final String VISTA_USUARIOS = "usuarios";
+    public static final String VISTA_ANALISIS = "analisis";
     private RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/")
@@ -274,6 +275,26 @@ public class FollowUpController {
             System.out.println("error");
         }
         return "redirect:/" + VISTA_HISTORICO;
+    }
+
+    @GetMapping("/analisis")
+    public String analizar(Model model) {
+        List<Pedido> pedidos = new ArrayList<Pedido>();
+        List<Pedido> coches = new ArrayList<Pedido>();
+        List<Pedido> bicis = new ArrayList<Pedido>();
+ 
+        try {
+            pedidos = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING, Pedido[].class).getBody());
+            coches = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING + "analisis/vehiculo/coche", Pedido[].class).getBody());
+            bicis = Arrays.asList(restTemplate.getForEntity(PEDIDOMANAGER_STRING+ "analisis/vehiculo/bici", Pedido[].class).getBody());
+            
+        } catch (HttpClientErrorException.NotFound ex) {
+        }
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("coches", coches.size());
+        model.addAttribute("bicis", bicis.size());
+ 
+        return VISTA_ANALISIS;
     }
 
 }
