@@ -89,8 +89,7 @@
                                                     <tr>
                                                         <th scope="col">Pedido</th>
                                                         <th scope="col">Estado</th>
-                                                        <th sec:authorize="hasAnyRole('ROLE_REP', 'ROLE_ADM')"
-                                                            scope="col">Vehículo</th>
+                                                        <th scope="col">Vehículo</th>
                                                         <th sec:authorize="hasAnyRole('ROLE_ADM', 'ROLE_CLI', 'ROLE_EMP')"
                                                             scope="col">Seguimiento</th>
                                                     </tr>
@@ -103,7 +102,7 @@
                                                         <td>
                                                             <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
                                                                 <!--SELECT-->
-                                                                <div class="dropdown">
+                                                                <div sec:authorize="hasAnyRole('ROLE_ADM','ROLE_REP')" class="dropdown">
                                                                     <a class="btn btn-secondary dropdown-toggle btn btn-light" href="#"
                                                                         role="button" id="dropdownMenuLink"
                                                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -160,7 +159,7 @@
                                                         <td>
                                                             <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">           
                                                                 <!--SELECT-->
-                                                                <div class="dropdown">
+                                                                <div sec:authorize="hasAnyRole('ROLE_ADM','ROLE_REP')" class="dropdown">
                                                                     <a class="btn btn-secondary dropdown-toggle btn btn-light" href="#"
                                                                         role="button" id="dropdownMenuLink"
                                                                         data-bs-toggle="dropdown" aria-expanded="false">
