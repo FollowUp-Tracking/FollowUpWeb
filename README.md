@@ -1,8 +1,8 @@
 <h3 align="center">FollowUp Web</h3>
 
 <h3 align="left">Comentarios:</h3>
-<h5 aling="left">La rama <b>*master</b> contine el codigo completo</h5>
-<h5 aling="left">Para el funcionamiento del front-end junto con MySQL es necesario contar con el Workbench de MySQL y adaptar los datos de <b>nombre de la base de datos</b> (spring.datasource.url), <b>usuario</b> (spring.datasource.username) y <b>contraseña</b> (spring.datasource.password) usados en <b>application.porperties</b></h5>
+<h5 aling="left">La rama <i>*master</i> contine el codigo completo</h5>
+<h5 aling="left">Para el funcionamiento del front-end junto con MySQL es necesario contar con el Workbench de MySQL y adaptar los datos de <i>nombre de la base de datos</i> (spring.datasource.url), <i>usuario</i> (spring.datasource.username) y <i>contraseña</i> (spring.datasource.password) usados en <b>application.porperties</b></h5>
 <h5 aling="left">Para el funcionamiento del front-end junto con HTTPS es necesario indicar la ruta global del archivo <i>mykeys.jks</i> (server.ssl.key-store)</h5>
 <p align="left">
 </p>
